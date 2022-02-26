@@ -3,7 +3,7 @@ const router = express.Router();
 const productController = require('./controllers/products');
 
 
-router.get('/', productController.hello, (req, res) => {
+router.get('/', productController.createProduct, (req, res) => {
     res.send();
 });
 

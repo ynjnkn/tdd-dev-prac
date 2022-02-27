@@ -12,7 +12,7 @@ const host = '0.0.0.0';
 const app = express();
 const productRoutes = require('./routes');
 
-app.use('/api/products', productRoutes);
+app.use('/api/products', express.json(), productRoutes);
 
 app.listen(port, () => {
     console.log(`Running on http://${host}:${port}`);

@@ -13,10 +13,10 @@ const createProduct = async (req, res, next) => {
 
 const getProducts = async (req, res, next) => {
     try {
-        const products = await Product.find({}).exec();
+        const allProducts = await Product.find({});
         res.
             status(200)
-            .json(products);
+            .json(allProducts);
     } catch (error) {
         next(error);
     }

@@ -22,4 +22,14 @@ const getProducts = async (req, res, next) => {
     }
 }
 
-module.exports = { createProduct, getProducts };
+const getProductById = async (req, res, next) => {
+    try {
+        const { productId } = req.params;
+        const product = await Product.findById(productId);
+        res.send(product);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = { createProduct, getProducts, getProductById };

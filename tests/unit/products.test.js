@@ -6,7 +6,9 @@ const allProducts = require("../data/all-products");
 
 Product.create = jest.fn();
 Product.find = jest.fn();
+Product.findById = jest.fn();
 
+const productId = "621b7d196a1a25ce35411712";
 let req, res, next;
 beforeEach(() => {
     req = httpMocks.createRequest();
@@ -70,5 +72,16 @@ describe("Product Controller Get", () => {
         Product.find.mockReturnValue(rejectedPromise);
         await productController.getProducts(req, res, next);
         expect(next).toHaveBeenCalledWith(errorMessage);
+    });
+});
+
+describe("Product Controller GetById", () => {
+    test("should have a getProductById", () => {
+        expect(typeof (productController.getProductById)).toBe("function");
+    });
+    test("should call Product.findById", async () => {
+        req.params.productId = productId;
+        await productController.getProductById(req, res, next);
+        expect(Product.findById).toHaveBeenCalledWith(productId);
     });
 });

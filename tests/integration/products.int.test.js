@@ -19,9 +19,6 @@ test('should return 500 on POST /api/products', async () => {
             name: 'phone',
         })
     expect(response.statusCode).toBe(500);
-
-    // console.log('response.body', response.body);
-
     expect(response.body).toStrictEqual({ message: "Product validation failed: price: Path `price` is required., description: Path `description` is required." })
 });
 
@@ -33,3 +30,4 @@ test('GET /api/products', async () => {
     expect(response.body[0].name).toBeDefined();
     expect(response.body[0].description).toBeDefined();
 });
+

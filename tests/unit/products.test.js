@@ -43,7 +43,7 @@ describe("Product Controller Create", () => {
         // MongoDB의 의존성을 없애기 위한 구문 - 끝
         await productController.createProduct(req, res, next);
         expect(next).toHaveBeenCalledWith(errorMessage);
-    })
+    });
 });
 
 describe("Product Controller Get", () => {
@@ -63,5 +63,12 @@ describe("Product Controller Get", () => {
         Product.find.mockReturnValue(allProducts);
         await productController.getProducts(req, res, next);
         expect(res._getJSONData()).toStrictEqual(allProducts);
+    });
+    test("should handle errors", async () => {
+        const errorMessage = { message: "error loading product list" };
+        const rejectedPromise = Promise.reject(errorMessage);
+        Product.find.mockReturnValue(rejectedPromise);
+        await productController.getProducts(req, res, next);
+        expect(next).toHaveBeenCalledWith(errorMessage);
     });
 });

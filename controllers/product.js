@@ -26,10 +26,41 @@ const getProductById = async (req, res, next) => {
     try {
         const { productId } = req.params;
         const product = await Product.findById(productId);
-        res.send(product);
+        if (product) {
+            return res
+                .status(200)
+                .json(product);
+        } else {
+            return res
+                .status(404)
+                .send();
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+const updateProduct = async (req, res, next) => {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.productId,
+            req.body,
+            { new: true }
+        )
+        if (updatedProduct) {
+
+            res
+                .status(200)
+                .json(updatedProduct);
+        } else {
+            res
+                .status(404)
+                .send();
+        }
+
     } catch (error) {
         next(error);
     }
 }
 
-module.exports = { createProduct, getProducts, getProductById };
+module.exports = { createProduct, getProducts, getProductById, updateProduct };
